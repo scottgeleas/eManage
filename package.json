@@ -20,8 +20,8 @@
   },
   "homepage": "https://github.com/scottgeleas/eManage#readme",
   "dependencies": {
-    "express": "^4.17.1",
+    "console.table": "^0.10.0",
     "inquirer": "^8.1.0",
-    "mysql": "^2.18.1"
+    "mysql2": "^2.2.5"
   }
 }
