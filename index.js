@@ -27,7 +27,7 @@ function ques() {
             type: 'list',
             message: 'What would you like to do?',
             name: 'action',
-            choices: ['Add Department', 'Add Employee', 'Add Role', 'Departments', 'Employees', 'Roles']
+            choices: ['Add Department', 'Add Employee', 'Add Role', 'Change Employee Role', 'Departments', 'Employees', 'Roles']
         }
     ]).then((answer) => {
         switch (answer.action) {
@@ -39,6 +39,9 @@ function ques() {
                 break;
             case 'Add Role':
                 addRole()
+                break;
+            case 'Change Employee Role':
+                // 
                 break;
             case 'Departments':
                 viewDept()
