@@ -10,6 +10,8 @@ let connection = mysql.createConnection({
     database: 'company_db'
 });
 
+
+
 connection.connect(function (err) {
     if (err) {
         console.error('error connecting: ' + err.stack);
@@ -41,7 +43,7 @@ function ques() {
                 addRole()
                 break;
             case 'Change Employee Role':
-                // 
+                updateEmployeeRole()
                 break;
             case 'Departments':
                 viewDept()
@@ -127,6 +129,73 @@ function addRole() {
         }
     ]).then((answer) => {
         connection.query(`INSERT INTO roles (title, salary, department_id) VALUES ('${answer.roleTitle}', '${answer.roleSal}', '${answer.roleDept}');`, (error, result) => {
+            if (error) {
+                console.error('An error occurred while executing the query')
+                throw error
+            }
+            ques()
+        })
+    })
+}
+
+async function updateEmployeeRole() {
+
+    let choices = []
+
+    // first list out all the employees with a select * statement and print to the CLI
+    connection.query(`SELECT * FROM employees;`, (error, result) => {
+        if (error) {
+            console.error('An error occurred while executing the query')
+            throw error
+        }
+        // console.log(result)
+        result.forEach(employee => {
+            choices.push(employee.first_name + ' ' +employee.last_name + " " + employee.id)
+        })
+        // console.log(choices)
+
+        
+        // console.log("inside of connection", choices)
+        inquirer.prompt([
+            {
+                type: 'list',
+                message: 'Which employee to update',
+                name: 'emp',
+                choices: choices
+            },
+            {
+                type: 'input',
+                message: 'pick employee\'s new role',
+                name: 'newRole',
+                // choices: ["manager", "assistant"]
+            },
+        ]).then((answer) => {
+            console.log(answer)
+
+            connection.query(`UPDATE employees SET role_id = ${answer.newRole} WHERE id = ${answer.emp};`, (error, result) => {
+                if (error) {
+                    console.error('An error occurred while executing the query')
+                    throw error
+                }
+                ques()
+            })
+        })
+    })
+    // once selected from inquirer then  the insert into statement can get filled out
+
+    await console.log("outside of connection", choices)
+    return
+
+    inquirer.prompt([
+        {
+            type: 'list',
+            message: 'Which ',
+            name: 'deptName',
+            // choices: choices
+            choices: ['',]
+        },
+    ]).then((answer) => {
+        connection.query(`INSERT INTO departments (name) VALUES ('${answer.deptName}');`, (error, result) => {
             if (error) {
                 console.error('An error occurred while executing the query')
                 throw error
