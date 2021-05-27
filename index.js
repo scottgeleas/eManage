@@ -1,5 +1,6 @@
 const inquirer = require("inquirer");
 const mysql = require("mysql2");
+const { promisify } = require('util')
 
 require('console.table');
 
@@ -20,6 +21,8 @@ connection.connect(function (err) {
 
     console.log('connected as id ' + connection.threadId);
 });
+
+const query = promisify(connection.query.bind(connection))
 
 ques()
 
@@ -139,51 +142,43 @@ function addRole() {
 }
 
 async function updateEmployeeRole() {
-
-    let choices = []
-
     // first list out all the employees with a select * statement and print to the CLI
-    connection.query(`SELECT * FROM employees;`, (error, result) => {
-        if (error) {
-            console.error('An error occurred while executing the query')
-            throw error
+    const employees = (await query(`SELECT * FROM employees;`)).map((employee) => {
+        return {
+            name: employee.first_name + ' ' +employee.last_name,
+            value: employee.id,
         }
-        // console.log(result)
-        result.forEach(employee => {
-            choices.push(employee.first_name + ' ' +employee.last_name + " " + employee.id)
-        })
-        // console.log(choices)
-
-        
-        // console.log("inside of connection", choices)
-        inquirer.prompt([
-            {
-                type: 'list',
-                message: 'Which employee to update',
-                name: 'emp',
-                choices: choices
-            },
-            {
-                type: 'input',
-                message: 'pick employee\'s new role',
-                name: 'newRole',
-                // choices: ["manager", "assistant"]
-            },
-        ]).then((answer) => {
-            console.log(answer)
-
-            connection.query(`UPDATE employees SET role_id = ${answer.newRole} WHERE id = ${answer.emp};`, (error, result) => {
-                if (error) {
-                    console.error('An error occurred while executing the query')
-                    throw error
-                }
-                ques()
-            })
-        })
     })
-    // once selected from inquirer then  the insert into statement can get filled out
 
-    await console.log("outside of connection", choices)
+    const roles = (await query(`SELECT * FROM roles;`)).map((roles) => {
+        return {
+            name: role.title,
+            value: role.id,
+        }
+    })
+
+    const answer = await inquirer.prompt([
+        {
+            type: 'list',
+            message: 'Which employee to update',
+            name: 'emp',
+            choices: employees
+        },
+        {
+            type: 'list',
+            message: 'pick employee\'s new role',
+            name: 'newRole',
+            choices: roles
+        },
+    ])
+    console.log(answer)
+
+    await query(`UPDATE employees SET role_id = ? WHERE id = ?;`, [
+        answer.newRole,
+        answer.emp,
+    ])
+    ques()
+    // once selected from inquirer then  the insert into statement can get filled out
     return
 
     inquirer.prompt([
