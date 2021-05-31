@@ -9,12 +9,12 @@ VALUES ("Accounting");
 INSERT INTO departments (`name`)
 VALUES ("R&D");
 
-INSERT INTO roles (`title`, `salary`)
-VALUES ("Engineer", 100000);
-INSERT INTO roles (`title`, `salary`)
-VALUES ("Manager", 75000);
-INSERT INTO roles (`title`, `salary`)
-VALUES ("Accountant", 65000);
+INSERT INTO roles (`title`, `salary`, `department_id`)
+VALUES ("Engineer", 100000, 4);
+INSERT INTO roles (`title`, `salary`, `department_id`)
+VALUES ("Manager", 75000, 2);
+INSERT INTO roles (`title`, `salary`, `department_id`)
+VALUES ("Accountant", 65000, 3);
 
 INSERT INTO employees (`first_name`, `last_name`, `role_id`, `manager_id`)
 VALUES ('Tom', 'Fish', 1, 1);

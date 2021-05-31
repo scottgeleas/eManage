@@ -20,7 +20,7 @@ connection.connect(function (err) {
     }
 
     console.log('connected as id ' + connection.threadId);
-    
+
     ques()
 });
 
@@ -145,15 +145,15 @@ async function updateEmployeeRole() {
     // first list out all the employees with a select * statement and print to the CLI
     const employees = (await query(`SELECT * FROM employees;`)).map((employee) => {
         return {
-            name: employee.first_name + ' ' +employee.last_name,
+            name: employee.first_name + ' ' + employee.last_name,
             value: employee.id,
         }
     })
 
     const roles = (await query(`SELECT * FROM roles;`)).map((roles) => {
         return {
-            name: role.title,
-            value: role.id,
+            name: roles.title,
+            value: roles.id,
         }
     })
 
