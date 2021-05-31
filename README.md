@@ -2,7 +2,7 @@
 
  ## Description
 
-This is a command line application letting you manager your team and departments. Select and option from the menu to quickly add an employee, a department, or a new role. You can also view each data set directly in the terminal.
+This is a command line application letting you manage your team and departments. Select and option from the menu to quickly add an employee, a department, or a new role. You can also view each data set directly in the terminal.
 
  ## Getting Started:
 
@@ -21,7 +21,7 @@ If you want to edit this app you must have a Github account, have downloaded Nod
 
 - Javascript
 - Node.js
-- MySQL
+- SQL
 - Visual Studio Code
 
  ### Acknowledgments:

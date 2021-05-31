@@ -20,11 +20,11 @@ connection.connect(function (err) {
     }
 
     console.log('connected as id ' + connection.threadId);
+    
+    ques()
 });
 
 const query = promisify(connection.query.bind(connection))
-
-ques()
 
 function ques() {
     inquirer.prompt([
