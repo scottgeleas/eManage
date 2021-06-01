@@ -5,8 +5,11 @@
 This is a command line application letting you manage your team and departments. Select and option from the menu to quickly add an employee, a department, or a new role. You can also view each data set directly in the terminal. Here is a few examples of what you can do:
 
 ![Departments](./assets/departments.png)
+
 ![Employees](./assets/employees.png)
+
 ![Roles](./assets/roles.png)
+
 ![Change Employee Role](./assets/updateEmployee.png)
 
 Watch the demo [here](https://www.youtube.com/watch?v=ygzTjZdrFXo)
